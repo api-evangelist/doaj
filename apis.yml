@@ -1,23 +1,147 @@
 aid: doaj
+
 name: DOAJ
-description: 'DOAJ is a company surfaced via the API Evangelist harvest backlog (source: tag-qc) and added
-  to the network as a stub for full-pipeline profiling.'
+
+description: The Directory of Open Access Journals (DOAJ) provides a searchable database of peer‑reviewed open access journals and articles, offering
+  free access to scholarly content, metadata, and APIs for developers. It supports publishers, libraries, funders, and researchers by promoting
+  transparency, best practices, and open science. DOAJ also offers premium services, tools for journal evaluation, and a commitment to preserving
+  open scholarly communication.
+
 url: https://raw.githubusercontent.com/api-evangelist/doaj/refs/heads/main/apis.yml
+
 x-type: company
+
 x-source: harvest:tag-qc
-x-tier: stub
-x-tier-reason: harvest
+
+x-tier: profiled
+x-tier-reason: enrichment pass 2026-10-14 (modular-v1; was harvest)
+
 specificationVersion: '0.20'
+
 created: '2026-10-14'
+
 modified: '2026-10-14'
+
 tags:
-- Company
-apis: []
+- OpenAccess
+- Journals
+- ScholarlyPublishing
+- Metadata
+- APIs
+
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+
 common:
+- type: AgenticAccess
+  url: agentic-access/doaj-agentic-access.yml
+- type: Spectral
+  url: rules/doaj-rules.yml
+- type: ErrorCatalog
+  url: errors/doaj-problem-types.yml
+- type: Conformance
+  url: conformance/doaj-conformance.yml
+- type: Hosts
+  url: hosts/doaj-hosts.yml
+- type: Vendors
+  url: vendors/doaj-vendors.yml
+- type: GitHubOrganization
+  url: https://github.com/DOAJ
+- type: DomainSecurity
+  url: security/doaj-domain-security.yml
 - type: Website
   url: https://doaj.org
+- type: APIReference
+  url: https://doaj.org/docs/api/
+- type: GettingStarted
+  url: https://doaj.org/docs/api/
+- type: Support
+  url: https://doaj.org/support/
+- type: Blog
+  url: https://blog.doaj.org
+- type: TermsOfService
+  url: https://doaj.org/terms/
+- type: PrivacyPolicy
+  url: https://doaj.org/privacy/
+- type: SignUp
+  url: https://doaj.org/apply/
+
+apis:
+- name: DOAJ API
+  description: DOAJ provides a REST API for accessing journal and article metadata.
+  humanURL: https://doaj.org/docs/api/
+  baseURL: https://doaj.org/api/v4
+  openAPI:
+    url: openapi/doaj-openapi.json
+  aid: doaj:doaj-api
+- aid: doaj:doaj-bulk-api-api
+  name: DOAJ Bulk API
+  description: The Bulk API API from DOAJ — 3 operation(s) for bulk api.
+  humanURL: https://doaj.org/docs/api/
+  baseURL: https://doaj.org/api/v4
+  tags:
+  - Bulk API
+  properties:
+  - type: OpenAPI
+    url: openapi/doaj-bulk-api-api-openapi.yml
+- aid: doaj:doaj-crud-applications-api
+  name: DOAJ CRUD Applications API
+  description: The CRUD Applications API from DOAJ — 2 operation(s) for crud applications.
+  humanURL: https://doaj.org/docs/api/
+  baseURL: https://doaj.org/api/v4
+  tags:
+  - CRUD Applications
+  properties:
+  - type: OpenAPI
+    url: openapi/doaj-crud-applications-api-openapi.yml
+- aid: doaj:doaj-crud-articles-api
+  name: DOAJ CRUD Articles API
+  description: The CRUD Articles API from DOAJ — 2 operation(s) for crud articles.
+  humanURL: https://doaj.org/docs/api/
+  baseURL: https://doaj.org/api/v4
+  tags:
+  - CRUD Articles
+  properties:
+  - type: OpenAPI
+    url: openapi/doaj-crud-articles-api-openapi.yml
+- aid: doaj:doaj-crud-journals-api
+  name: DOAJ CRUD Journals API
+  description: The CRUD Journals API from DOAJ — 1 operation(s) for crud journals.
+  humanURL: https://doaj.org/docs/api/
+  baseURL: https://doaj.org/api/v4
+  tags:
+  - CRUD Journals
+  properties:
+  - type: OpenAPI
+    url: openapi/doaj-crud-journals-api-openapi.yml
+- aid: doaj:doaj-search-api
+  name: DOAJ Search API
+  description: The Search API from DOAJ — 3 operation(s) for search.
+  humanURL: https://doaj.org/docs/api/
+  baseURL: https://doaj.org/api/v4
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/doaj-search-api-openapi.yml
+x-coverage:
+  state: blocked
+  reason: bot-challenge
+  method: derived
+  generated: '2026-10-14'
+  generator: derive-coverage.py (pre-flight evidence)
+  detail: the company's own front door answers a browser with an anti-bot challenge, so nothing behind it is reachable by any reader
+  evidence:
+  - url: https://doaj.org/api/mcp
+    status: 403
+  - url: https://doaj.org
+    status: 403
+x-enrichment:
+  date: '2026-10-14'
+  status: enriched
+  artifacts_added: 12
+  pass: modular-v1
+  engine: identity=local,contract=local,surfaces=local,docs=local,regulatory=local

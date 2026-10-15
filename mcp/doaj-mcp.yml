@@ -1,0 +1,6 @@
+generated: '2026-10-14'
+method: derived
+source: openapi/v4/swagger.json
+deployment:
+  mode: none
+  verified: derived

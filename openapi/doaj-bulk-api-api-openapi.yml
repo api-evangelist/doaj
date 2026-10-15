@@ -1,0 +1,243 @@
+openapi: 3.2.0
+info:
+  title: Doaj Bulk API
+  version: 4.0.0
+tags:
+- name: Bulk API
+paths:
+  /api/bulk/applications:
+    delete:
+      parameters:
+      - description: <div class="search-query-docs">Go to 'DASHBOARD' and 'Settings' to find your API key. If there is no key, click 'Generate a new API key'. If you do not see that button, contact us.
+        in: query
+        name: api_key
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: OK (Request succeeded), No Content
+        '400':
+          description: Bad Request. Your request body was missing a required field, or the data in one of the fields did not match the schema above (e.g. string of latin letters in an integer field). In the Bulk API it may mean that one of the records in the bulk operation failed. See the "error" part of the response for details.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+      summary: Delete applications in bulk [Authenticated, not public]
+      tags:
+      - Bulk API
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        description: <div class="search-query-docs">List of DOAJ application IDs to be deleted. You must own all the IDs, and none of them should have entered the DOAJ workflow yet. Otherwise, processing will stop. e.g. [4cf8b72139a749c88d043129f00e1b07, 8e896b60-35f1-4cd3-b3f9-07f7f29d8a98].</div>
+        required: true
+      operationId: deleteApiBulkApplications
+      x-operation-id-source: derived
+    post:
+      parameters:
+      - description: <div class="search-query-docs">Go to 'DASHBOARD' and 'Settings' to find your API key. If there is no key, click 'Generate a new API key'. If you do not see that button, contact us.
+        in: query
+        name: api_key
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Resources created successfully, response contains the new resource IDs and locations.
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    id:
+                      type: string
+                    location:
+                      type: string
+                    status:
+                      type: string
+                  type: object
+                type: array
+        '400':
+          description: Bad Request. Your request body was missing a required field, or the data in one of the fields did not match the schema above (e.g. string of latin letters in an integer field). In the Bulk API it may mean that one of the records in the bulk operation failed. See the "error" part of the response for details.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+      summary: Create applications in bulk [Authenticated, not public]
+      tags:
+      - Bulk API
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        description: <div class="search-query-docs">List of Application JSON objects that you would like to create. Each element of the list should comply with the schema displayed in the 'GET (Retrieve) an application route' below.</div>
+        required: true
+      operationId: postApiBulkApplications
+      x-operation-id-source: derived
+  /api/bulk/articles:
+    delete:
+      parameters:
+      - description: <div class="search-query-docs">Go to 'DASHBOARD' and 'Settings' to find your API key. If there is no key, click 'Generate a new API key'. If you do not see that button, contact us.
+        in: query
+        name: api_key
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: OK (Request succeeded), No Content
+        '400':
+          description: Bad Request. Your request body was missing a required field, or the data in one of the fields did not match the schema above (e.g. string of latin letters in an integer field). In the Bulk API it may mean that one of the records in the bulk operation failed. See the "error" part of the response for details.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+        '401':
+          description: Access to this route/resource requires authentication, but you did not provide any credentials.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+      summary: Bulk article delete [Authenticated, not public]
+      tags:
+      - Bulk API
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        description: <div class="search-query-docs">A list/array of DOAJ article IDs. E.g. ["4cf8b72139a749c88d043129f00e1b07", "232b53726fb74cc4a8eb4717e5a43193"].</div>
+        required: true
+      operationId: deleteApiBulkArticles
+      x-operation-id-source: derived
+    post:
+      parameters:
+      - description: <div class="search-query-docs">Go to 'DASHBOARD' and 'Settings' to find your API key. If there is no key, click 'Generate a new API key'. If you do not see that button, contact us.
+        in: query
+        name: api_key
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: 'Resources are being created asynchronously; response contains the task IDs '
+          content:
+            application/json:
+              schema:
+                properties:
+                  msg:
+                    type: string
+                  status:
+                    description: Link to the status URL for the task
+                    type: string
+                  upload_id:
+                    description: The upload id of the task, User can use this ID to check the bulk upload status.
+                    type: string
+                type: object
+        '400':
+          description: Bad Request. Your request body was missing a required field, or the data in one of the fields did not match the schema above (e.g. string of latin letters in an integer field). In the Bulk API it may mean that one of the records in the bulk operation failed. See the "error" part of the response for details.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+      summary: Bulk article creation (asynchronous) [Authenticated, not public]
+      tags:
+      - Bulk API
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        description: <div class="search-query-docs"><p>A list/array of article JSON objects that you would like to create or update. The contents should be a list, and each object in the list should comply with the schema displayed in the 'GET (Retrieve) an article route' below. Partial updates are not allowed; you have to supply the full JSON.</p><p>This request is asynchronous; the response will contain an upload_id. You can use this id to query the task status.</p></div>
+        required: true
+      operationId: postApiBulkArticles
+      x-operation-id-source: derived
+  /api/bulk/articles/{upload_id}:
+    get:
+      parameters:
+      - description: <div class="search-query-docs">The upload id of the task, User can use this id to check the bulk upload status.</div>
+        in: path
+        name: upload_id
+        required: true
+        schema:
+          type: string
+      - description: <div class="search-query-docs">Go to 'DASHBOARD' and 'Settings' to find your API key. If there is no key, click 'Generate a new API key'. If you do not see that button, contact us.
+        in: query
+        name: api_key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Return status of upload ids
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    description: The status of the task
+                    type: string
+                  results:
+                    description: The result of the upload
+                    properties:
+                      failed:
+                        description: The number of articles failed to import
+                        type: integer
+                      imported:
+                        description: The number of articles imported
+                        type: integer
+                      new:
+                        description: The number of articles created
+                        type: integer
+                      update:
+                        description: The number of articles updated
+                        type: integer
+                    type: object
+                  status:
+                    description: The status of the task
+                    enum:
+                    - pending
+                    - validated
+                    - failed
+                    - processed
+                    - processed_partial
+                    type: string
+                type: object
+        '400':
+          description: Fail get status reason
+          content:
+            application/json:
+              schema:
+                properties:
+                  msg:
+                    description: The error message
+                    type: string
+                type: object
+      summary: Get bulk article creation status [Authenticated, not public]
+      tags:
+      - Bulk API
+      operationId: getApiBulkArticlesByUploadId
+      x-operation-id-source: derived

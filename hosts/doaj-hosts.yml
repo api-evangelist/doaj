@@ -1,0 +1,71 @@
+generated: '2026-10-14'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 4
+  own: 3
+  other_domain: 0
+  platform: 1
+  roles:
+  - api
+  - marketing
+  - source
+  - website
+hosts:
+- host: api.doaj.org
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: doaj.org
+  role: api
+  relation: own
+- host: blog.doaj.org
+  found_by:
+  - pointer
+  - probed
+  - contract-discovery
+  - well-known
+  types:
+  - Blog
+  serves: []
+  registrable_domain: doaj.org
+  role: marketing
+  relation: own
+- host: doaj.org
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - docs-index
+  - spec-found
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - Website
+  - APIReference
+  - GettingStarted
+  - Support
+  - TermsOfService
+  - PrivacyPolicy
+  - SignUp
+  serves:
+  - api
+  - docs
+  - spec
+  - cdn
+  vendor: cloudflare
+  registrable_domain: doaj.org
+  role: website
+  relation: own
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform

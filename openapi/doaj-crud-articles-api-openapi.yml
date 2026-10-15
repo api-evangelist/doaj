@@ -1,0 +1,360 @@
+openapi: 3.2.0
+info:
+  title: Doaj CRUD Articles API
+  version: 4.0.0
+tags:
+- name: CRUD Articles
+paths:
+  /api/articles:
+    post:
+      parameters:
+      - description: <div class="search-query-docs">Go to 'DASHBOARD' and 'Settings' to find your API key. If there is no key, click 'Generate a new API key'. If you do not see that button, contact us.
+        in: query
+        name: api_key
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Resource created successfully, response contains the new resource ID and location.
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: string
+                  location:
+                    type: string
+                  status:
+                    type: string
+        '400':
+          description: Bad Request. Your request body was missing a required field, or the data in one of the fields did not match the schema above (e.g. string of latin letters in an integer field). In the Bulk API it may mean that one of the records in the bulk operation failed. See the "error" part of the response for details.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+        '401':
+          description: Access to this route/resource requires authentication, but you did not provide any credentials.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+        '403':
+          description: Access to this route/resource requires authentication, and you provided the wrong credentials. This includes situations where you are authenticated successfully via your API key, but you are not the owner of a specific resource and are therefore barred from updating/deleting it.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+      summary: Create an article [Authenticated, not public]
+      tags:
+      - CRUD Articles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        description: "<div class=\"search-query-docs\">\n            Article JSON that you would like to create or update. The contents should comply with the schema displayed\n            in the <a href=\"/api/docs#CRUD_Articles_get_api_articles_article_id\"> GET (Retrieve) an article route</a>.\n            <a href=\"https://doaj.github.io/doaj-docs/master/data_models/IncomingAPIArticle\">Explicit documentation for the structure of this data is available</a>.\n            Partial updates are not allowed; you have to supply the full JSON.</div>"
+        required: true
+      operationId: postApiArticles
+      x-operation-id-source: derived
+  /api/articles/{article_id}:
+    delete:
+      parameters:
+      - description: <div class="search-query-docs">Go to 'DASHBOARD' and 'Settings' to find your API key. If there is no key, click 'Generate a new API key'. If you do not see that button, contact us.
+        in: query
+        name: api_key
+        required: true
+        schema:
+          type: string
+      - description: <div class="search-query-docs">DOAJ article ID. E.g. 4cf8b72139a749c88d043129f00e1b07 .</div>
+        in: path
+        name: article_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: OK (Request succeeded), No Content
+        '401':
+          description: Access to this route/resource requires authentication, but you did not provide any credentials.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+        '403':
+          description: Access to this route/resource requires authentication, and you provided the wrong credentials. This includes situations where you are authenticated successfully via your API key, but you are not the owner of a specific resource and are therefore barred from updating/deleting it.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+      summary: Delete an article [Authenticated, not public]
+      tags:
+      - CRUD Articles
+      operationId: deleteApiArticlesByArticleId
+      x-operation-id-source: derived
+    get:
+      parameters:
+      - description: <div class="search-query-docs"><em>Note this parameter is optional for this route - you could, but don't have to supply a key. Doing so grants you access to records of yours that are not public, in addition to all public records.</em> Go to 'MY ACCOUNT' and 'Settings' to find your API key. If there is no key, click 'Generate a new API key'. If you do not see that button, contact us.
+        in: query
+        name: api_key
+        required: false
+        schema:
+          type: string
+      - description: <div class="search-query-docs">DOAJ article ID. E.g. 4cf8b72139a749c88d043129f00e1b07 .</div>
+        in: path
+        name: article_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful request/response
+          content:
+            application/json:
+              schema:
+                properties:
+                  admin:
+                    properties:
+                      in_doaj:
+                        type: boolean
+                      publisher_record_id:
+                        type: string
+                      upload_id:
+                        type: string
+                    title: admin
+                    type: object
+                  bibjson:
+                    properties:
+                      abstract:
+                        type: string
+                      author:
+                        items:
+                          properties:
+                            affiliation:
+                              type: string
+                            name:
+                              type: string
+                            orcid_id:
+                              type: string
+                          required:
+                          - name
+                          title: bibjson.author
+                          type: object
+                        type: array
+                      identifier:
+                        items:
+                          properties:
+                            id:
+                              type: string
+                            type:
+                              type: string
+                          required:
+                          - type
+                          - id
+                          title: bibjson.identifier
+                          type: object
+                        type: array
+                      journal:
+                        properties:
+                          country:
+                            type: string
+                          end_page:
+                            type: string
+                          language:
+                            items:
+                              type: string
+                            type: array
+                          number:
+                            type: string
+                          publisher:
+                            type: string
+                          start_page:
+                            type: string
+                          title:
+                            type: string
+                          volume:
+                            type: string
+                        title: bibjson.journal
+                        type: object
+                      keywords:
+                        items:
+                          type: string
+                        type: array
+                      link:
+                        items:
+                          properties:
+                            content_type:
+                              format: link_content_type
+                              type: string
+                            type:
+                              format: link_type
+                              type: string
+                            url:
+                              format: url
+                              type: string
+                          required:
+                          - type
+                          - url
+                          title: bibjson.link
+                          type: object
+                        type: array
+                      month:
+                        type: string
+                      subject:
+                        items:
+                          properties:
+                            code:
+                              type: string
+                            scheme:
+                              type: string
+                            term:
+                              type: string
+                          title: bibjson.subject
+                          type: object
+                        type: array
+                      title:
+                        type: string
+                      year:
+                        type: string
+                    required:
+                    - title
+                    - identifier
+                    title: bibjson
+                    type: object
+                  created_date:
+                    format: date-time
+                    type: string
+                  es_type:
+                    type: string
+                  id:
+                    type: string
+                  last_updated:
+                    format: date-time
+                    type: string
+                required:
+                - bibjson
+                title: Article schema
+        '401':
+          description: Access to this route/resource requires authentication, but you did not provide any credentials.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+        '500':
+          description: Unable to retrieve the recource. This record contains bad data
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+      summary: Retrieve an article
+      tags:
+      - CRUD Articles
+      operationId: getApiArticlesByArticleId
+      x-operation-id-source: derived
+    put:
+      parameters:
+      - description: <div class="search-query-docs">Go to 'DASHBOARD' and 'Settings' to find your API key. If there is no key, click 'Generate a new API key'. If you do not see that button, contact us.
+        in: query
+        name: api_key
+        required: true
+        schema:
+          type: string
+      - description: <div class="search-query-docs">DOAJ article ID. E.g. 4cf8b72139a749c88d043129f00e1b07 .</div>
+        in: path
+        name: article_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: OK (Request succeeded), No Content
+        '400':
+          description: Bad Request. Your request body was missing a required field, or the data in one of the fields did not match the schema above (e.g. string of latin letters in an integer field). In the Bulk API it may mean that one of the records in the bulk operation failed. See the "error" part of the response for details.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+        '401':
+          description: Access to this route/resource requires authentication, but you did not provide any credentials.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+      summary: Update an article [Authenticated, not public]
+      tags:
+      - CRUD Articles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        description: "<div class=\"search-query-docs\">\n            Article JSON that you would like to create or update. The contents should comply with the schema displayed\n            in the <a href=\"/api/docs#CRUD_Articles_get_api_articles_article_id\"> GET (Retrieve) an article route</a>.\n            <a href=\"https://doaj.github.io/doaj-docs/master/data_models/IncomingAPIArticle\">Explicit documentation for the structure of this data is available</a>.\n            Partial updates are not allowed; you have to supply the full JSON.</div>"
+        required: true
+      operationId: putApiArticlesByArticleId
+      x-operation-id-source: derived

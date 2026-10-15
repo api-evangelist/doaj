@@ -1,0 +1,30 @@
+{
+  "provider": "doaj",
+  "sources": [
+    "doaj-openapi.json"
+  ],
+  "outputs": [
+    "doaj-bulk-api-api-openapi.yml",
+    "doaj-crud-applications-api-openapi.yml",
+    "doaj-crud-articles-api-openapi.yml",
+    "doaj-crud-journals-api-openapi.yml",
+    "doaj-search-api-openapi.yml"
+  ],
+  "archived": [
+    "archived openapi/doaj-openapi.json"
+  ],
+  "errors": [],
+  "warnings": [
+    "doaj-openapi.json: info.title missing"
+  ],
+  "notes": [
+    "doaj-openapi.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "doaj-openapi.json: declared missing tag: Bulk API",
+    "doaj-openapi.json: declared missing tag: CRUD Applications",
+    "doaj-openapi.json: declared missing tag: CRUD Articles",
+    "doaj-openapi.json: declared missing tag: CRUD Journals",
+    "doaj-openapi.json: declared missing tag: Search",
+    "apis.yml register: written (+5 apis, 6 total)"
+  ],
+  "skipped": []
+}

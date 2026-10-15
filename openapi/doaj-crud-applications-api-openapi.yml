@@ -1,0 +1,547 @@
+openapi: 3.2.0
+info:
+  title: Doaj CRUD Applications API
+  version: 4.0.0
+tags:
+- name: CRUD Applications
+paths:
+  /api/applications:
+    post:
+      parameters:
+      - description: <div class="search-query-docs">Go to 'DASHBOARD' and 'Settings' to find your API key. If there is no key, click 'Generate a new API key'. If you do not see that button, contact us.
+        in: query
+        name: api_key
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Resource created successfully, response contains the new resource ID and location.
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: string
+                  location:
+                    type: string
+                  status:
+                    type: string
+        '400':
+          description: Bad Request. Your request body was missing a required field, or the data in one of the fields did not match the schema above (e.g. string of latin letters in an integer field). In the Bulk API it may mean that one of the records in the bulk operation failed. See the "error" part of the response for details.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+        '401':
+          description: Access to this route/resource requires authentication, but you did not provide any credentials.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+        '409':
+          description: This resource or one it depends on is currently locked for editing by another user, and you may not submit changes to it at this time
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+      summary: Create an application [Authenticated, not public]
+      tags:
+      - CRUD Applications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        description: "<div class=\"search-query-docs\">\n            Application JSON that you would like to create or update. The contents should comply with the schema displayed in the\n            <a href=\"/api/docs#CRUD_Applications_get_api_application_application_id\"> GET (Retrieve) an application route</a>.\n            <a href=\"https://doaj.github.io/doaj-docs/master/data_models/IncomingAPIApplication\">Explicit documentation for the structure of this data is available</a>.\n            Partial updates are not allowed; you have to supply the full JSON.</div>"
+        required: true
+      operationId: postApiApplications
+      x-operation-id-source: derived
+  /api/applications/{application_id}:
+    delete:
+      parameters:
+      - description: <div class="search-query-docs">Go to 'DASHBOARD' and 'Settings' to find your API key. If there is no key, click 'Generate a new API key'. If you do not see that button, contact us.
+        in: query
+        name: api_key
+        required: true
+        schema:
+          type: string
+      - description: <div class="search-query-docs">DOAJ application ID. E.g. 4cf8b72139a749c88d043129f00e1b07 .</div>
+        in: path
+        name: application_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: OK (Request succeeded), No Content
+        '401':
+          description: Access to this route/resource requires authentication, but you did not provide any credentials.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+        '403':
+          description: Access to this route/resource requires authentication, and you provided the wrong credentials. This includes situations where you are authenticated successfully via your API key, but you are not the owner of a specific resource and are therefore barred from updating/deleting it.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+        '409':
+          description: This resource or one it depends on is currently locked for editing by another user, and you may not submit changes to it at this time
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+      summary: Delete an application [Authenticated, not public]
+      tags:
+      - CRUD Applications
+      operationId: deleteApiApplicationsByApplicationId
+      x-operation-id-source: derived
+    get:
+      parameters:
+      - description: <div class="search-query-docs">Go to 'DASHBOARD' and 'Settings' to find your API key. If there is no key, click 'Generate a new API key'. If you do not see that button, contact us.
+        in: query
+        name: api_key
+        required: true
+        schema:
+          type: string
+      - description: <div class="search-query-docs">DOAJ application ID. E.g. 4cf8b72139a749c88d043129f00e1b07 .</div>
+        in: path
+        name: application_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A successful request/response
+          content:
+            application/json:
+              schema:
+                properties:
+                  admin:
+                    properties:
+                      application_status:
+                        type: string
+                      current_journal:
+                        type: string
+                      date_applied:
+                        type: string
+                      owner:
+                        type: string
+                    title: admin
+                    type: object
+                  bibjson:
+                    properties:
+                      alternative_title:
+                        type: string
+                      apc:
+                        properties:
+                          has_apc:
+                            type: boolean
+                          max:
+                            items:
+                              properties:
+                                currency:
+                                  type: string
+                                price:
+                                  type: integer
+                              title: bibjson.apc.max
+                              type: object
+                            type: array
+                          url:
+                            format: url
+                            type: string
+                        title: bibjson.apc
+                        type: object
+                      article:
+                        properties:
+                          license_display:
+                            items:
+                              type: string
+                            type: array
+                          license_display_example_url:
+                            format: url
+                            type: string
+                        title: bibjson.article
+                        type: object
+                      boai:
+                        type: boolean
+                      copyright:
+                        properties:
+                          author_retains:
+                            type: boolean
+                          url:
+                            format: url
+                            type: string
+                        required:
+                        - url
+                        title: bibjson.copyright
+                        type: object
+                      deposit_policy:
+                        properties:
+                          has_policy:
+                            type: boolean
+                          is_registered:
+                            type: boolean
+                          service:
+                            items:
+                              type: string
+                            type: array
+                          url:
+                            format: url
+                            type: string
+                        title: bibjson.deposit_policy
+                        type: object
+                      discontinued_date:
+                        type: string
+                      editorial:
+                        properties:
+                          board_url:
+                            format: url
+                            type: string
+                          review_process:
+                            items:
+                              type: string
+                            type: array
+                          review_url:
+                            format: url
+                            type: string
+                        required:
+                        - review_process
+                        - review_url
+                        title: bibjson.editorial
+                        type: object
+                      eissn:
+                        type: string
+                      institution:
+                        properties:
+                          country:
+                            format: country_code
+                            type: string
+                          name:
+                            type: string
+                        title: bibjson.institution
+                        type: object
+                      is_replaced_by:
+                        items:
+                          type: string
+                        type: array
+                      keywords:
+                        items:
+                          type: string
+                        type: array
+                      labels:
+                        items:
+                          type: string
+                        type: array
+                      language:
+                        items:
+                          type: string
+                        type: array
+                      license:
+                        items:
+                          properties:
+                            BY:
+                              type: boolean
+                            NC:
+                              type: boolean
+                            ND:
+                              type: boolean
+                            SA:
+                              type: boolean
+                            type:
+                              type: string
+                            url:
+                              format: url
+                              type: string
+                          title: bibjson.license
+                          type: object
+                        type: array
+                      oa_start:
+                        type: integer
+                      other_charges:
+                        properties:
+                          has_other_charges:
+                            type: boolean
+                          url:
+                            format: url
+                            type: string
+                        title: bibjson.other_charges
+                        type: object
+                      pid_scheme:
+                        properties:
+                          has_pid_scheme:
+                            type: boolean
+                          scheme:
+                            items:
+                              type: string
+                            type: array
+                        title: bibjson.pid_scheme
+                        type: object
+                      pissn:
+                        type: string
+                      plagiarism:
+                        properties:
+                          detection:
+                            type: boolean
+                          url:
+                            format: url
+                            type: string
+                        required:
+                        - detection
+                        - url
+                        title: bibjson.plagiarism
+                        type: object
+                      preservation:
+                        properties:
+                          has_preservation:
+                            type: boolean
+                          national_library:
+                            items:
+                              type: string
+                            type: array
+                          service:
+                            items:
+                              type: string
+                            type: array
+                          url:
+                            format: url
+                            type: string
+                        title: bibjson.preservation
+                        type: object
+                      publication_time_weeks:
+                        type: integer
+                      publisher:
+                        properties:
+                          country:
+                            format: country_code
+                            type: string
+                          name:
+                            type: string
+                        required:
+                        - name
+                        title: bibjson.publisher
+                        type: object
+                      ref:
+                        properties:
+                          aims_scope:
+                            format: url
+                            type: string
+                          author_instructions:
+                            format: url
+                            type: string
+                          journal:
+                            format: url
+                            type: string
+                          license_terms:
+                            format: url
+                            type: string
+                          oa_statement:
+                            format: url
+                            type: string
+                        required:
+                        - journal
+                        title: bibjson.ref
+                        type: object
+                      replaces:
+                        items:
+                          type: string
+                        type: array
+                      subject:
+                        items:
+                          properties:
+                            code:
+                              type: string
+                            scheme:
+                              type: string
+                            term:
+                              type: string
+                          title: bibjson.subject
+                          type: object
+                        type: array
+                      title:
+                        type: string
+                      waiver:
+                        properties:
+                          has_waiver:
+                            type: boolean
+                          url:
+                            format: url
+                            type: string
+                        title: bibjson.waiver
+                        type: object
+                    required:
+                    - copyright
+                    - deposit_policy
+                    - editorial
+                    - eissn
+                    - keywords
+                    - language
+                    - license
+                    - ref
+                    - pid_scheme
+                    - pissn
+                    - plagiarism
+                    - preservation
+                    - publication_time_weeks
+                    - publisher
+                    - oa_start
+                    - other_charges
+                    - waiver
+                    - title
+                    title: bibjson
+                    type: object
+                  created_date:
+                    format: date-time
+                    type: string
+                  id:
+                    type: string
+                  last_manual_update:
+                    format: date-time
+                    type: string
+                  last_updated:
+                    format: date-time
+                    type: string
+                required:
+                - admin
+                - bibjson
+                title: Application schema
+        '401':
+          description: Access to this route/resource requires authentication, but you did not provide any credentials.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+      summary: Retrieve an application [Authenticated, not public]
+      tags:
+      - CRUD Applications
+      operationId: getApiApplicationsByApplicationId
+      x-operation-id-source: derived
+    put:
+      parameters:
+      - description: <div class="search-query-docs">Go to 'DASHBOARD' and 'Settings' to find your API key. If there is no key, click 'Generate a new API key'. If you do not see that button, contact us.
+        in: query
+        name: api_key
+        required: true
+        schema:
+          type: string
+      - description: <div class="search-query-docs">DOAJ application ID. E.g. 4cf8b72139a749c88d043129f00e1b07 .</div>
+        in: path
+        name: application_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: OK (Request succeeded), No Content
+        '400':
+          description: Bad Request. Your request body was missing a required field, or the data in one of the fields did not match the schema above (e.g. string of latin letters in an integer field). In the Bulk API it may mean that one of the records in the bulk operation failed. See the "error" part of the response for details.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+        '401':
+          description: Access to this route/resource requires authentication, but you did not provide any credentials.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+        '403':
+          description: Access to this route/resource requires authentication, and you provided the wrong credentials. This includes situations where you are authenticated successfully via your API key, but you are not the owner of a specific resource and are therefore barred from updating/deleting it.
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+        '409':
+          description: This resource or one it depends on is currently locked for editing by another user, and you may not submit changes to it at this time
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+      summary: Update an application [Authenticated, not public]
+      tags:
+      - CRUD Applications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        description: "<div class=\"search-query-docs\">\n            Application JSON that you would like to create or update. The contents should comply with the schema displayed in the\n            <a href=\"/api/docs#CRUD_Applications_get_api_application_application_id\"> GET (Retrieve) an application route</a>.\n            <a href=\"https://doaj.github.io/doaj-docs/master/data_models/IncomingAPIApplication\">Explicit documentation for the structure of this data is available</a>.\n            Partial updates are not allowed; you have to supply the full JSON.</div>"
+        required: true
+      operationId: putApiApplicationsByApplicationId
+      x-operation-id-source: derived

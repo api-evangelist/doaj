@@ -1,0 +1,12 @@
+generated: '2026-10-14'
+method: searched
+source: https://doaj.org/privacy/
+signals:
+  data_subject_request:
+    evidence:
+      - source: https://doaj.org/privacy/
+        http_status: 200
+        fetched: "true"
+        quote: "You may access, review and edit your account details by logging into your DOAJ account ."
+        section: "The policy"
+        note: "Provides a mechanism for data subjects to access and correct their personal data."

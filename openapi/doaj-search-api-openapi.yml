@@ -1,0 +1,586 @@
+openapi: 3.2.0
+info:
+  title: Doaj Search API
+  version: 4.0.0
+tags:
+- name: Search
+paths:
+  /api/search/applications/{search_query}:
+    get:
+      parameters:
+      - description: <div class="search-query-docs">Go to 'DASHBOARD' and 'Settings' to find your API key. If there is no key, click 'Generate a new API key'. If you do not see that button, contact us.
+        in: query
+        name: api_key
+        required: true
+        schema:
+          type: string
+      - description: <div class="search-query-docs">What you are searching for, e.g. computers. <br> <br> You can search in any field in the results or schema. <a href="#specific_field_search">More details</a> <br> For example, to search for all journals tagged with the keyword "heritage" <pre>bibjson.keywords:heritage</pre> <a href="#short_field_names">Short-hand names are available</a> for some fields <pre>issn:2212-4276</pre> <pre>publisher:sciendo</pre> </div>
+        in: path
+        name: search_query
+        required: true
+        schema:
+          type: string
+      - description: Which page of the results you wish to see
+        in: query
+        name: page
+        required: false
+        schema:
+          type: integer
+      - description: How many results per page you wish to see; the default is 10 The page size limit is 100
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          type: integer
+      - description: <div> Substitutions are also available here for convenience <ul> <li>title - order by the normalised, unpunctuated version of the title</li> <li>issn - sort by issn</li> </ul> For example <pre>title:asc</pre> <pre>issn:desc</pre> </div>
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Search was successful
+          content:
+            application/json:
+              schema:
+                properties:
+                  page:
+                    type: integer
+                  pageSize:
+                    type: integer
+                  query:
+                    type: string
+                  results:
+                    items:
+                      properties:
+                        bibjson:
+                          properties:
+                            alternative_title:
+                              type: string
+                            apc:
+                              properties:
+                                currency:
+                                  type: string
+                                max_price:
+                                  type: string
+                              title: apc
+                              type: object
+                            apc_url:
+                              type: string
+                            author_pays:
+                              type: string
+                            author_pays_url:
+                              type: string
+                            copyright:
+                              properties:
+                                author_retains:
+                                  type: string
+                                url:
+                                  type: string
+                              title: copyright
+                              type: object
+                            country:
+                              type: string
+                            deposit_policy:
+                              items:
+                                properties:
+                                  service:
+                                    items:
+                                      title: service
+                                      type: string
+                                    type: array
+                                  url:
+                                    type: string
+                                title: deposit_policy
+                                type: object
+                              type: array
+                            editorial_review:
+                              properties:
+                                process:
+                                  type: string
+                                url:
+                                  type: string
+                              title: editorial_review
+                              type: object
+                            identifier:
+                              items:
+                                properties:
+                                  id:
+                                    type: string
+                                  type:
+                                    type: string
+                                title: identifier
+                                type: object
+                              type: array
+                            institution:
+                              type: string
+                            keywords:
+                              items:
+                                type: string
+                              type: array
+                            license:
+                              items:
+                                properties:
+                                  BY:
+                                    type: boolean
+                                  NC:
+                                    type: boolean
+                                  ND:
+                                    type: boolean
+                                  SA:
+                                    type: boolean
+                                  embedded:
+                                    type: string
+                                  embedded_example_url:
+                                    type: string
+                                  open_access:
+                                    type: string
+                                  type:
+                                    type: string
+                                  url:
+                                    type: string
+                                title: license
+                                type: object
+                              type: array
+                            link:
+                              items:
+                                properties:
+                                  type:
+                                    type: string
+                                  url:
+                                    type: string
+                                title: link
+                                type: object
+                              type: array
+                            other_charges_url:
+                              type: string
+                            pid_scheme:
+                              items:
+                                type: string
+                              type: array
+                            plagiarism_detection:
+                              properties:
+                                detection:
+                                  type: boolean
+                                url:
+                                  type: string
+                              title: plagiarism_detection
+                              type: object
+                            preservation:
+                              properties:
+                                services:
+                                  items:
+                                    type: string
+                                  type: array
+                                url:
+                                  type: string
+                              title: preservation
+                              type: object
+                            publication_time_weeks:
+                              type: string
+                            publisher:
+                              type: string
+                            subject:
+                              items:
+                                properties:
+                                  code:
+                                    type: string
+                                  scheme:
+                                    type: string
+                                  term:
+                                    type: string
+                                title: subject
+                                type: object
+                              type: array
+                            title:
+                              type: string
+                          title: bibjson
+                          type: object
+                        created_date:
+                          format: dateTime
+                          type: string
+                        id:
+                          type: string
+                        last_updated:
+                          format: dateTime
+                          type: string
+                      title: Journal
+                      type: object
+                    type: array
+                  timestamp:
+                    format: dateTime
+                    type: string
+                  total:
+                    type: integer
+                title: Journal search
+        '400':
+          description: Bad Request
+      summary: Search your applications [Authenticated, not public]
+      tags:
+      - Search
+      operationId: getApiSearchApplicationsBySearchQuery
+      x-operation-id-source: derived
+  /api/search/articles/{search_query}:
+    get:
+      parameters:
+      - description: <div class="search-query-docs"> What you are searching for, e.g. computers <br> <br> You can search inside any field you see in the results or the schema. <a href="#specific_field_search">More details</a> <br> For example, to search for all articles with abstracts containing the word "shadow" <pre>bibjson.abstract:"shadow"</pre> <a href="#short_field_names">Short-hand names are available</a> for some fields <pre>doi:10.3389/fpsyg.2013.00479</pre> <pre>issn:1874-9496</pre> <pre>license:CC-BY</pre> <pre>title:hydrostatic pressure</pre> </div>
+        in: path
+        name: search_query
+        required: true
+        schema:
+          type: string
+      - description: Which page of the results you want to see.
+        in: query
+        name: page
+        required: false
+        schema:
+          type: integer
+      - description: How many results per page you want to see. The default is 10. The page size limit is 100
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          type: integer
+      - description: <div> Substitutions are also available here for convenience <ul> <li>title - order by the normalised, unpunctuated version of the title</li> </ul> For example <pre>title:asc</pre> </div>
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Search was successful
+          content:
+            application/json:
+              schema:
+                properties:
+                  page:
+                    type: integer
+                  pageSize:
+                    type: integer
+                  query:
+                    type: string
+                  results:
+                    items:
+                      properties:
+                        bibjson:
+                          properties:
+                            abstract:
+                              type: string
+                            author:
+                              items:
+                                properties:
+                                  affiliation:
+                                    type: string
+                                  email:
+                                    type: string
+                                  name:
+                                    type: string
+                                  orcid_id:
+                                    type: string
+                                title: author
+                                type: object
+                              type: array
+                            end_page:
+                              type: string
+                            identifier:
+                              items:
+                                properties:
+                                  id:
+                                    type: string
+                                  type:
+                                    type: string
+                                title: identifier
+                                type: object
+                              type: array
+                            journal:
+                              properties:
+                                country:
+                                  type: string
+                                language:
+                                  items:
+                                    type: string
+                                  type: array
+                                number:
+                                  type: string
+                                publisher:
+                                  type: string
+                                title:
+                                  type: string
+                                volume:
+                                  type: string
+                              title: journal
+                              type: object
+                            keywords:
+                              items:
+                                type: string
+                              type: array
+                            link:
+                              items:
+                                properties:
+                                  content_type:
+                                    type: string
+                                  type:
+                                    type: string
+                                  url:
+                                    type: string
+                                title: link
+                                type: object
+                              type: array
+                            month:
+                              type: string
+                            start_page:
+                              type: integer
+                            subject:
+                              items:
+                                properties:
+                                  code:
+                                    type: string
+                                  scheme:
+                                    type: string
+                                  term:
+                                    type: string
+                                title: subject
+                                type: object
+                              type: array
+                            title:
+                              type: string
+                            year:
+                              type: string
+                          title: bibjson
+                          type: object
+                        created_date:
+                          format: dateTime
+                          type: string
+                        id:
+                          type: string
+                        last_updated:
+                          format: dateTime
+                          type: string
+                      title: Article
+                      type: object
+                    type: array
+                  timestamp:
+                    format: dateTime
+                    type: string
+                  total:
+                    type: integer
+                title: Article search
+        '400':
+          description: Bad Request
+      summary: Search articles
+      tags:
+      - Search
+      operationId: getApiSearchArticlesBySearchQuery
+      x-operation-id-source: derived
+  /api/search/journals/{search_query}:
+    get:
+      parameters:
+      - description: <div class="search-query-docs"> What you are searching for, e.g. computers <br> <br> You can search inside any field you see in the results or the schema. <a href="#specific_field_search">More details</a> <br> For example, to search for all journals tagged with the keyword "heritage" <pre>bibjson.keywords:heritage</pre> <a href="#short_field_names">Short-hand names are available</a> for some fields <pre>issn:1874-9496</pre> <pre>publisher:dove</pre> </div>
+        in: path
+        name: search_query
+        required: true
+        schema:
+          type: string
+      - description: Which page of the results you want to see.
+        in: query
+        name: page
+        required: false
+        schema:
+          type: integer
+      - description: How many results per page you want to see. The default is 10. The page size limit is 100
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          type: integer
+      - description: <div> Substitutions are also available here for convenience <ul> <li>title - order by the normalised, unpunctuated version of the title</li> <li>issn - sort by issn</li> </ul> For example <pre>title:asc</pre> <pre>issn:desc</pre> </div>
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Search was successful
+          content:
+            application/json:
+              schema:
+                properties:
+                  page:
+                    type: integer
+                  pageSize:
+                    type: integer
+                  query:
+                    type: string
+                  results:
+                    items:
+                      properties:
+                        bibjson:
+                          properties:
+                            alternative_title:
+                              type: string
+                            apc:
+                              properties:
+                                currency:
+                                  type: string
+                                max_price:
+                                  type: string
+                              title: apc
+                              type: object
+                            apc_url:
+                              type: string
+                            author_pays:
+                              type: string
+                            author_pays_url:
+                              type: string
+                            copyright:
+                              properties:
+                                author_retains:
+                                  type: string
+                                url:
+                                  type: string
+                              title: copyright
+                              type: object
+                            country:
+                              type: string
+                            deposit_policy:
+                              items:
+                                properties:
+                                  service:
+                                    items:
+                                      title: service
+                                      type: string
+                                    type: array
+                                  url:
+                                    type: string
+                                title: deposit_policy
+                                type: object
+                              type: array
+                            editorial_review:
+                              properties:
+                                process:
+                                  type: string
+                                url:
+                                  type: string
+                              title: editorial_review
+                              type: object
+                            identifier:
+                              items:
+                                properties:
+                                  id:
+                                    type: string
+                                  type:
+                                    type: string
+                                title: identifier
+                                type: object
+                              type: array
+                            institution:
+                              type: string
+                            keywords:
+                              items:
+                                type: string
+                              type: array
+                            license:
+                              items:
+                                properties:
+                                  BY:
+                                    type: boolean
+                                  NC:
+                                    type: boolean
+                                  ND:
+                                    type: boolean
+                                  SA:
+                                    type: boolean
+                                  embedded:
+                                    type: string
+                                  embedded_example_url:
+                                    type: string
+                                  open_access:
+                                    type: string
+                                  type:
+                                    type: string
+                                  url:
+                                    type: string
+                                title: license
+                                type: object
+                              type: array
+                            link:
+                              items:
+                                properties:
+                                  type:
+                                    type: string
+                                  url:
+                                    type: string
+                                title: link
+                                type: object
+                              type: array
+                            other_charges_url:
+                              type: string
+                            pid_scheme:
+                              items:
+                                type: string
+                              type: array
+                            plagiarism_detection:
+                              properties:
+                                detection:
+                                  type: boolean
+                                url:
+                                  type: string
+                              title: plagiarism_detection
+                              type: object
+                            preservation:
+                              properties:
+                                services:
+                                  items:
+                                    type: string
+                                  type: array
+                                url:
+                                  type: string
+                              title: preservation
+                              type: object
+                            publication_time_weeks:
+                              type: string
+                            publisher:
+                              type: string
+                            subject:
+                              items:
+                                properties:
+                                  code:
+                                    type: string
+                                  scheme:
+                                    type: string
+                                  term:
+                                    type: string
+                                title: subject
+                                type: object
+                              type: array
+                            title:
+                              type: string
+                          title: bibjson
+                          type: object
+                        created_date:
+                          format: date-time
+                          type: string
+                        id:
+                          type: string
+                        last_updated:
+                          format: date-time
+                          type: string
+                      title: Journal
+                      type: object
+                    type: array
+                  timestamp:
+                    format: date-time
+                    type: string
+                  total:
+                    type: integer
+                title: Journal search
+        '400':
+          description: Bad Request
+      summary: Search journals
+      tags:
+      - Search
+      operationId: getApiSearchJournalsBySearchQuery
+      x-operation-id-source: derived

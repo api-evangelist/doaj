@@ -1,0 +1,52 @@
+generated: '2026-10-14'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/doaj-openapi.json
+format: custom
+envelope:
+  media_type: null
+  schema: null
+coverage:
+  operations: 17
+  statuses_declared: 6
+problems:
+- status: 400
+  title: Bad Request
+  description: Bad Request. Your request body was missing a required field, or the data in one of the fields did
+    not match the schema above (e.g. string of
+  operations: 12
+  media_types: []
+  schema: null
+- status: 401
+  title: Unauthorized
+  description: Access to this route/resource requires authentication, but you did not provide any credentials.
+  operations: 9
+  media_types: []
+  schema: null
+- status: 403
+  title: Forbidden
+  description: Access to this route/resource requires authentication, and you provided the wrong credentials. This
+    includes situations where you are authen
+  operations: 4
+  media_types: []
+  schema: null
+- status: 404
+  title: Not Found
+  description: Resource not found
+  operations: 7
+  media_types: []
+  schema: null
+- status: 409
+  title: Conflict
+  description: This resource or one it depends on is currently locked for editing by another user, and you may not
+    submit changes to it at this time
+  operations: 3
+  media_types: []
+  schema: null
+- status: 500
+  title: Internal Server Error
+  description: Unable to retrieve the recource. This record contains bad data
+  operations: 1
+  media_types: []
+  schema: null

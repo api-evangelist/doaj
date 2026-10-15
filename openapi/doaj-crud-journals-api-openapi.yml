@@ -1,0 +1,66 @@
+openapi: 3.2.0
+info:
+  title: Doaj CRUD Journals API
+  version: 4.0.0
+tags:
+- name: CRUD Journals
+paths:
+  /api/journals/{journal_id}:
+    get:
+      parameters:
+      - description: <div class="search-query-docs">DOAJ journal ID. E.g. 4cf8b72139a749c88d043129f00e1b07 .</div>
+        in: path
+        name: journal_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '<a href="https://doaj.github.io/doaj-docs/master/data_models/OutgoingAPIJournal">Detailed documentation on the response format is available</a>. '
+          content:
+            application/json:
+              schema:
+                properties:
+                  admin:
+                    properties:
+                      in_doaj:
+                        type: boolean
+                      last_full_review:
+                        type: string
+                      ticked:
+                        type: boolean
+                    title: admin
+                    type: object
+                  bibjson:
+                    properties: {}
+                    title: bibjson
+                    type: object
+                  created_date:
+                    format: date-time
+                    type: string
+                  es_type:
+                    type: string
+                  id:
+                    type: string
+                  last_manual_update:
+                    format: date-time
+                    type: string
+                  last_updated:
+                    format: date-time
+                    type: string
+                title: Journal schema
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+      summary: Retrieve a journal by ID
+      tags:
+      - CRUD Journals
+      operationId: getApiJournalsByJournalId
+      x-operation-id-source: derived
