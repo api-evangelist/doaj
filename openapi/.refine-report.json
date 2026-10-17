@@ -1,7 +1,7 @@
 {
   "provider": "doaj",
   "sources": [
-    "doaj-openapi.json"
+    "_original/doaj-openapi.json"
   ],
   "outputs": [
     "doaj-bulk-api-api-openapi.yml",
@@ -10,21 +10,26 @@
     "doaj-crud-journals-api-openapi.yml",
     "doaj-search-api-openapi.yml"
   ],
-  "archived": [
-    "archived openapi/doaj-openapi.json"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [
     "doaj-openapi.json: info.title missing"
   ],
   "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "doaj-openapi.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
     "doaj-openapi.json: declared missing tag: Bulk API",
     "doaj-openapi.json: declared missing tag: CRUD Applications",
     "doaj-openapi.json: declared missing tag: CRUD Articles",
     "doaj-openapi.json: declared missing tag: CRUD Journals",
     "doaj-openapi.json: declared missing tag: Search",
-    "apis.yml register: written (+5 apis, 6 total)"
+    "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "doaj-bulk-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "doaj-crud-applications-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "doaj-crud-articles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "doaj-crud-journals-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "doaj-search-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
