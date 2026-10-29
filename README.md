@@ -64,5 +64,108 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-DOAJ is a company surfaced via the API Evangelist harvest backlog (source: tag-qc) and added to the network as a stub for full-pipeline profiling.
-- https://doaj.org
+The Directory of Open Access Journals (DOAJ) provides a searchable database of peer‑reviewed open access journals and articles, offering free access to scholarly content, metadata, and APIs for developers. It supports publishers, libraries, funders, and researchers by promoting transparency, best practices, and open science. DOAJ also offers premium services, tools for journal evaluation, and a commitment to preserving open scholarly communication.
+
+**Areas:** OpenAccess · Journals · ScholarlyPublishing · Metadata
+
+## DOAJ on APIs.io
+
+Everything profiled for DOAJ is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/doaj/](https://apis.io/providers/doaj/)** — or go straight to one of the APIs or properties below.
+
+### APIs (6)
+
+- [DOAJ API](https://apis.io/apis/doaj/doaj-api/) — DOAJ provides a REST API for accessing journal and article metadata.
+- [DOAJ Bulk API](https://apis.io/apis/doaj/doaj-bulk-api-api/) — The Bulk API API from DOAJ — 3 operation(s) for bulk api.
+- [DOAJ CRUD Applications API](https://apis.io/apis/doaj/doaj-crud-applications-api/) — The CRUD Applications API from DOAJ — 2 operation(s) for crud applications.
+- [DOAJ CRUD Articles API](https://apis.io/apis/doaj/doaj-crud-articles-api/) — The CRUD Articles API from DOAJ — 2 operation(s) for crud articles.
+- [DOAJ CRUD Journals API](https://apis.io/apis/doaj/doaj-crud-journals-api/) — The CRUD Journals API from DOAJ — 1 operation(s) for crud journals.
+- [DOAJ Search API](https://apis.io/apis/doaj/doaj-search-api/) — The Search API from DOAJ — 3 operation(s) for search.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Doaj Agentic Access](https://apis.io/agentic-access/doaj/doaj-agentic-access/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [DOAJ API Rules](https://apis.io/rules/doaj/doaj-rules/)
+
+#### Security (1)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Doaj Domain Security](https://apis.io/security/doaj/doaj-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://doaj.org)
+- [Getting started](https://doaj.org/docs/api/)
+- [API reference](https://doaj.org/docs/api/)
+- [Sign up](https://doaj.org/apply/)
+- [Support](https://doaj.org/support/)
+- [Blog](https://blog.doaj.org)
+- [Terms of service](https://doaj.org/terms/)
+- [Privacy policy](https://doaj.org/privacy/)
+- [GitHub](https://github.com/DOAJ)
+
+## API Evangelist rating
+
+**Kin Score 30.1** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 53.6 |
+| Contract quality | 40.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 5.3 |
+| Developer ergonomics | 26.2 |
+| Access clarity | 34.2 |
+
+**Agent readiness 18.0** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 18.6** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/doaj/](https://apis.io/providers/doaj/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for DOAJ: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/doaj/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
